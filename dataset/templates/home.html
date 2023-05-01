@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-lg-8">
+            <h1>DataSets page</h1>
+        </div>
+        <div class="col-lg-4">
+            <a href="{% url 'createdataset' %}" class="btn btn-primary w-100">Create</a>
+        </div>
+    </div>
+    <form method="get">
+        <input type="search" name="q" placeholder="Qidiruv..." class="form-control" value="{{ request.GET.q }}">
+    </form>
+<br>
+    {% if datasets %}
+        {% for dataset in datasets %}
+
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 w-100">
+                    <div class="card shadow-sm w-100">
+                        <div class="card-header">
+                            <h4 class="font-weight-bold text-center mb-0"><a href="{% url 'detail' dataset.pk %}">Dataset Information</a></h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="font-weight-bold">User Info</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><b>Username:</b> {{ dataset.user.username }}</li>
+                                        <li><b>First name:</b> {{ dataset.user.first_name }}</li>
+                                        <li><b>Last name:</b> {{ dataset.user.last_name }}</li>
+                                        <li><b>Email:</b> {{ dataset.user.email }}</li>
+                                        <li><b>Is staff:</b> {{ dataset.user.is_staff }}</li>
+                                        <li><b>Is active:</b> {{ dataset.user.is_active }}</li>
+                                        <li><b>Data joined:</b> {{ dataset.user.data_joined }}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="font-weight-bold">Dataset Info</h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><b>Title:</b> {{ dataset.title }}</li>
+                                        <li><b>Photo:</b></li>
+                                        <img src="{{ dataset.photo.url }}" alt="{{ dataset.title }}" class="img-thumbnail" width="100" height="100">
+                                        <li><b>Description:</b> {{ dataset.description }}</li>
+                                        <li><b>Category:</b> {{ dataset.category }}</li>
+                                        <li><b>File:</b> <a href="{{ dataset.file.url }}" class="btn btn-sm btn-outline-secondary">{{ dataset.file }}</a></li>
+
+                                        <li><b>Created date:</b> {{ dataset.created_date }}</li>
+                                        <li><b>Updated date:</b> {{ dataset.updated_date }}</li>
+                                        <li><b>Tags :</b> <span id="id_tags_view">{{ dataset.tags }}</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-end">
+                                <a href="{% url 'updatedataset' dataset.pk %}" class="btn btn-sm btn-outline-primary mr-2">Edit</a>
+                                <a href="{% url 'deletedataset' dataset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+    {% else %}
+    <h3>No datasets found</h3>
+    {% endif %}
+</div>
+{% endblock content %}

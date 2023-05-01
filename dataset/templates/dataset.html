@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="container">
+<h1>Detail page</h1>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      {% if dataset %}
+        <div class="card shadow-sm">
+          <div class="card-header">
+            <h4 class="font-weight-bold text-center mb-0">Dataset Information</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="font-weight-bold">User Info</h5>
+                <ul class="list-unstyled mb-0">
+                  <li><b>Username:</b> {{ dataset.user.username }}</li>
+                  <li><b>First name:</b> {{ dataset.user.first_name }}</li>
+                  <li><b>Last name:</b> {{ dataset.user.last_name }}</li>
+                  <li><b>Email:</b> {{ dataset.user.email }}</li>
+                  <li><b>Is staff:</b> {{ dataset.user.is_staff }}</li>
+                  <li><b>Is active:</b> {{ dataset.user.is_active }}</li>
+                  <li><b>Data joined:</b> {{ dataset.user.data_joined }}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h5 class="font-weight-bold">Dataset Info</h5>
+                <ul class="list-unstyled mb-0">
+                  <li><b>Title:</b> {{ dataset.title }}</li>
+                  <li><b>Photo:</b></li>
+                  <img src="{{ dataset.photo.url }}" alt="{{ dataset.title }}" class="img-thumbnail" width="100" height="100">
+                  <li><b>Description:</b> {{ dataset.description|removetags:"a"|safe }}</li>
+                  <li><b>Category:</b> {{ dataset.category }}</li>
+                  <li><b>File:</b></li>
+                  <a href="{{ dataset.file.url }}" class="btn btn-sm btn-outline-secondary">{{ dataset.file }}</a>
+                  <li><b>Created date:</b> {{ dataset.created_date }}</li>
+                  <li><b>Updated date:</b> {{ dataset.updated_date }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="d-flex justify-content-end">
+              <a href="{% url 'updatedataset' dataset.pk %}" class="btn btn-sm btn-outline-primary mr-2">Edit</a>
+              <a href="{% url 'deletedataset' dataset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <h5 class="text-center">No datasets found.</h5>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

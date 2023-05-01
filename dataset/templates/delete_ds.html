@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container m-5">
+<h1>Delete dataset</h1>
+<form method="POST" class="my-4">
+    <div class="form-group">
+        <label for="delete-confirm" class="form-label"><b>{{object.title}}</b> datasetni o'chirishga aminmisiz?</label>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="delete-confirm" name="delete-confirm" {% if form.delete_confirm.value %}checked{% endif %}>
+            <label class="form-check-label" for="delete-confirm">Ha</label>
+        </div>
+    </div>
+    {% csrf_token %}
+    <button type='submit' class="btn btn-danger">O'chirish</button>
+</form>
+</div>
+{% endblock content %}
